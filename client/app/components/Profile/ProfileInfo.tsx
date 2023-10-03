@@ -5,6 +5,7 @@ import { AiOutlineCamera } from "react-icons/ai";
 import avatarIcon from "../../../public/assests/avatar.png";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import { toast } from "react-hot-toast";
+import { useEditProfileMutation, useUpdateAvatarMutation } from "@/redux/features/user/userApi";
 
 type Props = {
   avatar: string | null;
@@ -13,16 +14,44 @@ type Props = {
 
 const ProfileInfo: FC<Props> = ({ avatar, user }) => {
   const [name, setName] = useState(user && user.name);
+  const [updateAvatar, { isSuccess, error }] = useUpdateAvatarMutation();
+  const [editProfile, { isSuccess: success, error: updateError }] = useEditProfileMutation();
   
   const [loadUser, setLoadUser] = useState(false);
   const {} = useLoadUserQuery(undefined, { skip: loadUser ? false : true });
 
   const imageHandler = async (e: any) => {
-    console.log('99999');
+    const fileReader = new FileReader();
+
+    fileReader.onload = () => {
+      if (fileReader.readyState === 2) {
+        const avatar = fileReader.result;
+        updateAvatar(avatar);
+      }
+    };
+    fileReader.readAsDataURL(e.target.files[0]);
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      setLoadUser(true);
+    }
+    if (error || updateError) {
+      console.log(error);
+    }
+    if(success){
+      toast.success("Profile updated successfully!");
+      setLoadUser(true);
+    }
+  }, [isSuccess, error,success, updateError]);
+
   const handleSubmit = async (e: any) => {
-    console.log("submit");
+    e.preventDefault();
+    if (name !== "") {
+      await editProfile({
+        name: name,
+      });
+    }
   };
 
   return (
