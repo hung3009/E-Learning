@@ -3,7 +3,7 @@ import { CatchAsyncError } from "../middleware/catchAsyncErrors";
 import { ErrorHandler } from "../utils/ErrorHandler";
 import cloudinary from "cloudinary";
 import { createCourse, getAllCoursesService } from "../services/course.service";
-import CourseModel from "../models/course.model";
+import CourseModel, { IComment } from "../models/course.model";
 import { redis } from "../utils/redis";
 import mongoose from "mongoose";
 import path from "path";
@@ -41,8 +41,6 @@ export const editCourse = CatchAsyncError(
     try {
       const data = req.body;
 
-      console.log(data);
-
       const thumbnail = data.thumbnail;
 
       const courseId = req.params.id;
@@ -76,6 +74,10 @@ export const editCourse = CatchAsyncError(
         },
         { new: true }
       );
+
+      // update redis course details
+      await redis.set(courseId, JSON.stringify(course), "EX", 604800); // 7days
+
 
       res.status(201).json({
         success: true,

@@ -32,7 +32,6 @@ const CourseDetailsPage = ({ id }: Props) => {
     if (config) {
       const publishablekey = config?.publishablekey;
       console.log(publishablekey);
-    //   setStripePromise(loadStripe(publishablekey));
       setStripePromise(loadStripe(publishablekey));
     }
     if (data && userData?.user) {
