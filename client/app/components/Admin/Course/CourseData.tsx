@@ -23,7 +23,8 @@ const CourseData: FC<Props> = ({
 
   const handleBenefitChange = (index: number, value: any) => {
     const updatedBenefits = [...benefits];
-    updatedBenefits[index].title = value;
+    // updatedBenefits[index].title = value;
+    updatedBenefits[index] = { ...updatedBenefits[index], title: value };
     setBenefits(updatedBenefits);
   };
 
@@ -33,7 +34,8 @@ const CourseData: FC<Props> = ({
 
   const handlePrerequisitesChange = (index: number, value: any) => {
     const updatedPrerequisites = [...prerequisites];
-    updatedPrerequisites[index].title = value;
+    // updatedPrerequisites[index].title = value;
+    updatedPrerequisites[index] = { ...updatedPrerequisites[index], title: value };
     setPrerequisites(updatedPrerequisites);
   };
 
