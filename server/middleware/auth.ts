@@ -4,6 +4,7 @@ import {ErrorHandler} from "../utils/ErrorHandler";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { redis } from "../utils/redis";
 
+
 // authenticated user
 export const isAuthenticated = CatchAsyncError(async (req: Request, res: Response, next: NextFunction)=>{
     const access_token = req.cookies.access_token as string;
@@ -26,6 +27,7 @@ export const isAuthenticated = CatchAsyncError(async (req: Request, res: Respons
     req.user = JSON.parse(user);
     next();
 });
+
 
 // validate user role
 export const authorizeRoles = (...roles: string[]) => {
