@@ -44,7 +44,7 @@ const DashboardHeader: FC<Props> = ({ open, setOpen }) => {
       refetch();
     }
     audio.load();
-  }, [data, isSuccess,audio]);
+  }, [data, isSuccess,audio, refetch]);
 
   useEffect(() => {
     socketId.on("newNotification", (data) => {
