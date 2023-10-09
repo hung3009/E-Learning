@@ -77,7 +77,7 @@ const Footer = (props: Props) => {
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
                   Youtube
-                </Link>
+                </Link>  
               </li>
               <li>
                 <Link
