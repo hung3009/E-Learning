@@ -81,6 +81,7 @@ import {
   updateProfilePicture,
   updateUserInfo,
   updateUserRole,
+  updateAccessToken,
 } from "../controllers/user.controller";
 import { authorizeRoles, isAuthenticated } from "../middleware/auth";
 const userRouter = express.Router();
@@ -123,5 +124,7 @@ userRouter.delete(
   authorizeRoles("admin"),
   deleteUser
 );
+
+userRouter.get("/refresh", updateAccessToken);
 
 export default userRouter;

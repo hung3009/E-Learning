@@ -2,13 +2,15 @@
 import { useGetUsersAllCoursesQuery } from "@/redux/features/courses/coursesApi";
 import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Loader from "../components/Loader/Loader";
 import Header from "../components/Header";
 import Heading from "../utils/Heading";
 import { styles } from "../styles/style";
 import CourseCard from "../components/Course/CourseCard";
 import Footer from "../components/Footer";
+import { motion } from "framer-motion";
+
 
 type Props = {};
 
@@ -21,6 +23,13 @@ const Page = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [courses, setcourses] = useState([]);
   const [category, setCategory] = useState("All");
+
+  
+  const cardVariants = {
+    initial: { y: 50, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+  };
+
 
   useEffect(() => {
     if (category === "All") {
@@ -101,7 +110,15 @@ const Page = (props: Props) => {
             <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-3 lg:gap-[25px] 1500px:grid-cols-4 1500px:gap-[35px] mb-12 border-0">
               {courses &&
                 courses.map((item: any, index: number) => (
-                  <CourseCard item={item} key={index} />
+                  <motion.div
+                    key={index}
+                    variants={cardVariants}
+                    initial="initial"
+                    animate="animate"
+                    transition={{ duration: 0.3, delay: index * 0.4 }}
+                  >
+                    <CourseCard item={item} key={index} />
+                  </motion.div>
                 ))}
             </div>
           </div>

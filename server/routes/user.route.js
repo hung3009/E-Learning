@@ -70,4 +70,5 @@ userRouter.put("/update-user-avatar", auth_1.isAuthenticated, user_controller_1.
 userRouter.get("/get-users", auth_1.isAuthenticated, (0, auth_1.authorizeRoles)("admin"), user_controller_1.getAllUsers);
 userRouter.put("/update-user", auth_1.isAuthenticated, (0, auth_1.authorizeRoles)("admin"), user_controller_1.updateUserRole);
 userRouter.delete("/delete-user/:id", auth_1.isAuthenticated, (0, auth_1.authorizeRoles)("admin"), user_controller_1.deleteUser);
+userRouter.get("/refresh", user_controller_1.updateAccessToken);
 exports.default = userRouter;
